@@ -1,0 +1,21 @@
+%{
+    - Get a mean pitch for each files given. 
+%}
+
+function [arrayofpitch] = pitchfromfiles(arrayoffilepath)
+    arraysize = size(arrayoffilepath, 1);
+    arrayofpitch = zeros(arraysize, 1);
+    i = 1;
+    for file = arrayoffilepath'
+        disp(char(file));
+        [data, FS] = readwav(char(file));
+        disp('2');
+        pitch = fxpefac(data', FS);
+        disp('3');
+        pitch = mean(pitch);
+        disp('4')
+        arrayofpitch(i, 1) = pitch;
+        i = i+1;
+        disp('5');
+    end
+end

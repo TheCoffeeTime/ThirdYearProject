@@ -1,6 +1,6 @@
-addpath('/Users/Thanakorn/Downloads/voicebox');
-childFilePath = '/Users/Thanakorn/Documents/3rd project/speech-data/childes - children/';
-adultFilePath = '/Users/Thanakorn/Documents/3rd project/speech-data/podcasts - adults/';
+
+childFilePath = '/Users/Thanakorn/Documents/MATLAB/speech-data/childes-children/';
+adultFilePath = '/Users/Thanakorn/Documents/MATLAB/speech-data/podcasts-adults/';
 
 childFile = dir(strcat(childFilePath, '*.wav'));
 adultFile = dir(strcat(adultFilePath, '*.wav'));
