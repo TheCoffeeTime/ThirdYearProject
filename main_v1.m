@@ -12,6 +12,9 @@ datasize = size(label, 1);
 % MFCCs feature set.
 feature_pf = zeros(datasize, 4);
 feature_pf(:, 1) = pitchfromfiles(datasetpath);
+feature_pf(:, 2:4) = formantsfromfiles(datasetpath);
+
+
 
 dataperset = floor(datasize/n);
 
