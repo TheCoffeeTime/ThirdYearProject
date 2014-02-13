@@ -1,5 +1,5 @@
 %{
-    - Get a mean pitch for each files given. 
+    - Calculate a mean pitch for each given files. 
 %}
 
 function [arrayofpitch] = pitchfromfiles(arrayoffilepath)
