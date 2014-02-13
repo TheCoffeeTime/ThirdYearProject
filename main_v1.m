@@ -44,6 +44,7 @@ mfccdatasize = size(mfccslabel, 1);
     end
     
     options = statset('MaxIter', 100000);
-    mfccmodel = svmtrain(traindata, trainlabel, 'kernel_function', 'polynomial', 'polyorder', 13, 'options', options);
+    mfccmodel = svmtrain(traindata, trainlabel, 'kernel_function', 'rbf', 'options', options);
+    
     
 %end
