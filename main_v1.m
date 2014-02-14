@@ -17,8 +17,9 @@ datasize = size(label, 1);
 [feature_mfccs, mfccslabel] = mfccsfromfiles(datasetpath, label, noofmfcccoeff);
 mfccdatasize = size(mfccslabel, 1);
 
-%for i=1:n
-    
+accuracy = zeros(n, 1);
+for i=1:n
+    disp(strcat('Main Loop ', num2str(i)));
     %Create indexs for tranining and testing randomly.
     tstpercent = 0.4; % percent of the whole data for testing
     [trainmfcc, testmfcc] = crossvalind('HoldOut', mfccslabel, tstpercent); 
@@ -44,7 +45,17 @@ mfccdatasize = size(mfccslabel, 1);
     end
     
     options = statset('MaxIter', 100000);
+    disp('Creating MFCCs Model');
     mfccmodel = svmtrain(traindata, trainlabel, 'kernel_function', 'rbf', 'options', options);
     
     
-%end
+    textprogressbar('Classifying Mfccs data: ');
+    percentconstant = 100/l;
+    for j = 1:size(testdata, 1)
+        textprogressbar(j*percentconstant);
+        if (svmclassify(mfccmodel, testdata(j, :)) == testlabel(j, 1))
+            accuracy(i, 1) = accuracy(i, 1) + 1;
+        end
+    end
+    textprogressbar('done');
+end
