@@ -6,7 +6,6 @@ function [accuracy] = testmfccfeatures(loopno, features_mfccs, label, kfoldindex
     noofmfccs = size(features_mfccs, 2);
     nmfccd = (abs(label(:, 2) - label (:, 3))) + 1;     % vector of no. of mfccs for each data.
     tds = sum((kfoldindex ~= loopno) .* nmfccd);        % Train data size
-    tss = sum((kfoldindex == loopno) .* nmfccd);        % Test data size
     td = zeros(tds, noofmfccs);                         % train data matrix
     tdl = zeros(tds, 1);                                % train data label vector
     ti = 1;                                             % train data index 
@@ -43,7 +42,7 @@ function [accuracy] = testmfccfeatures(loopno, features_mfccs, label, kfoldindex
                 
                 %This is just here to count the accuracy of the method
                 %since I seems to be getting 100% accuracy. 
-                if(apl(j) == label(i, 1))
+                if(apl(j) == label(j, 1))
                     correctcountfull = correctcountfull + 1;
                 end
             end
@@ -55,6 +54,6 @@ function [accuracy] = testmfccfeatures(loopno, features_mfccs, label, kfoldindex
     end
     accuracy = zeros(1, 2);
     accuracy(1) = correctcount / nooftdf;
-    accuracy(2) = correctcountfull / tss;
+    accuracy(2) = correctcountfull / 
     
 end
