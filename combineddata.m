@@ -3,7 +3,7 @@
       connect each file name with their path, and group them together. 
     - Return the group as the data set path, and label. 
     - varargin is an infinite number of arguments
-    - The given path MUST contain '*' to indicate file format needed. 
+    - The given path MUST contain '*' followed by a file format.
     - Read given arguments in pair which "are directory path" and label
       of all the files in that directory (must be the same). (Well if they
       are not the same, why do you keep them in the same directory?)

@@ -1,11 +1,15 @@
 % Number of sets of data
 n = 10;
 noofmfcccoeff = 13;
+accuracy = zeros(n, 1); %Accuracy array
 
-% Group all the samples from various places into one place
+% Get all the file names required and put them into one list. 
+% also create a label corresponding to them. 
 childfilespath = '/Users/Thanakorn/Documents/MATLAB/speech-data/childes-children/*.wav';
 adultfilespath = '/Users/Thanakorn/Documents/MATLAB/speech-data/podcasts-adults/*.wav';
 [datasetpath, label] = combineddata(adultfilespath, 1, childfilespath, 0);
+
+%Total number of files in the list. 
 datasize = size(label, 1);
 
 % For each of those sample, extract features.
@@ -17,45 +21,9 @@ datasize = size(label, 1);
 [feature_mfccs, mfccslabel] = mfccsfromfiles(datasetpath, label, noofmfcccoeff);
 mfccdatasize = size(mfccslabel, 1);
 
-accuracy = zeros(n, 1);
+[kfoldindex] = crossvalind('Kfold', label, n);
 for i=1:n
-    disp(strcat('Main Loop ', num2str(i)));
-    %Create indexs for tranining and testing randomly.
-    tstpercent = 0.4; % percent of the whole data for testing
-    [trainmfcc, testmfcc] = crossvalind('HoldOut', mfccslabel, tstpercent); 
-    
-    
-    traindata = zeros(sum(trainmfcc == 1), noofmfcccoeff);
-    testdata = zeros(sum(testmfcc == 1), noofmfcccoeff);
-    
-    trainlabel = zeros(sum(trainmfcc == 1), 1);
-    testlabel = zeros(sum(testmfcc == 1), 1);
-    %Index for traindata and testdata
-    k = 1; l = 1;
-    for j = 1:mfccdatasize
-        if trainmfcc(j) == 1
-            traindata(k, :) = feature_mfccs(j, :);
-            trainlabel(k, 1) = mfccslabel(j);
-            k = k+1;
-        else
-            testdata(l, :) = feature_mfccs(j, :);
-            testlabel(l, 1) = mfccslabel(j);
-            l = l+1;
-        end
-    end
-    
-    options = statset('MaxIter', 100000);
-    disp('Creating MFCCs Model');
-    mfccmodel = svmtrain(traindata, trainlabel, 'kernel_function', 'rbf', 'options', options);
-    
-    
-    textprogressbar('Classifying Mfccs data: ');
-    percentconstant = 100/l;
-    for j = 1:size(testdata, 1)
-        textprogressbar(j*percentconstant);
-        if (svmclassify(mfccmodel, testdata(j, :)) == testlabel(j, 1))
-            accuracy(i, 1) = accuracy(i, 1) + 1;
-        end
-    end
-    textprogressbar('done');
+    disp(strcat('Test MFCCs loop no.', num2str(i)));
+    testmfccfeatures(i, feature_mfccs, mfccslabel, kfoldindex);
 end
+%}
