@@ -15,17 +15,18 @@ datasize = size(label, 1);
 % For each of those sample, extract features.
 % Pitch and formants features and MFCCs feature set.
 
-feature_pf = zeros(datasize, 4);
-feature_pf(:, 1) = pitchfromfiles(datasetpath);
-feature_pf(:, 2:4) = formantsfromfiles(datasetpath);
-%[feature_mfccs, mfccslabel] = mfccsfromfiles(datasetpath, label, noofmfcccoeff);
-%mfccdatasize = size(mfccslabel, 1);
+%feature_pf = zeros(datasize, 4);
+%feature_pf(:, 1) = pitchfromfiles(datasetpath);
+%feature_pf(:, 2:4) = formantsfromfiles(datasetpath);
+[feature_mfccs, mfccslabel] = mfccsfromfiles(datasetpath, label, noofmfcccoeff);
+mfccdatasize = size(mfccslabel, 1);
 
 [kfoldindex] = crossvalind('Kfold', label, n);
-for i=1:n
+%for i=1:n
+    i = 1;
     disp(strcat('Test MFCCs loop no.', num2str(i)));
-    %a = testmfccfeatures(i, feature_mfccs, mfccslabel, kfoldindex);
-    %accuracy(i, 1) = a(1);
-    accuracy(i, 2) = testpffeatures(i, feature_pf, label, kfoldindex);
-end
+    a = testmfccfeatures(i, feature_mfccs, mfccslabel, kfoldindex);
+    accuracy(i, 1) = a(1);
+    %accuracy(i, 2) = testpffeatures(i, feature_pf, label, kfoldindex);
+%end
 %}
