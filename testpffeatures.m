@@ -5,6 +5,7 @@ function [accuracy] = testpffeatures(loopno, features_pf, label, kfoldindex)
     tss = sum(kfoldindex == loopno);    % testig data size
     
     pfmodel = pftrain(loopno, features_pf, label, kfoldindex);
+    pfmodel.ModelType = 'PF';
     %savemodel(pfmodel, strcat('pf_', num2str(loopno)), '/Users/Thanakorn/Documents/ThirdYearProject/models/');
     
     % Testing phase
@@ -12,7 +13,7 @@ function [accuracy] = testpffeatures(loopno, features_pf, label, kfoldindex)
     for i = 1:ds
         %if it is a testing data
         if kfoldindex(i) == loopno
-            predictedlabel = svmclassify(pfmodel, features_pf(i));
+            predictedlabel = svmclassify(pfmodel, features_pf(i, :));
             if(predictedlabel == label(i))
                 correctcount = correctcount + 1;
             end

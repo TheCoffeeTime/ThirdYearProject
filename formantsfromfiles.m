@@ -11,8 +11,7 @@ function [arrayofformants] = formantsfromfiles(arrayoffilepath)
         
         [data, FS] = readwav(char(file));
         data = data(:, 1);
-        ar_coeffs = arburg(data,12);
-        [N,F,A,B] = lpcar2fm(ar_coeffs, 200);
+        F = getformantsfromdata(data);
         arrayofformants(i, 1:3) = F(1, 1:3);
         i = i+1;
     end

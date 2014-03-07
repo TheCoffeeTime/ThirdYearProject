@@ -19,14 +19,13 @@ datasize = size(label, 1);
 %feature_pf(:, 1) = pitchfromfiles(datasetpath);
 %feature_pf(:, 2:4) = formantsfromfiles(datasetpath);
 [feature_mfccs, mfccslabel] = mfccsfromfiles(datasetpath, label, noofmfcccoeff);
-mfccdatasize = size(mfccslabel, 1);
+%mfccdatasize = size(mfccslabel, 1);
+
 
 [kfoldindex] = crossvalind('Kfold', label, n);
-%for i=1:n
-    i = 1;
-    disp(strcat('Test MFCCs loop no.', num2str(i)));
-    a = testmfccfeatures(i, feature_mfccs, mfccslabel, kfoldindex);
-    accuracy(i, 1) = a(1);
+for i=1:n
+    disp(strcat('Test main loop ', num2str(i)));
+    accuracy(i, 1) = testmfccfeatures(i, feature_mfccs, mfccslabel, kfoldindex);
     %accuracy(i, 2) = testpffeatures(i, feature_pf, label, kfoldindex);
-%end
+end
 %}

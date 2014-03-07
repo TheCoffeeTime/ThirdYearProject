@@ -3,7 +3,7 @@
 function [pfmodel] = pftrain(loopno, features_pf, label, kfoldindex)
     ds = size(label, 1);                % data size (number of files)
     tds = sum(kfoldindex ~= loopno);    % training data size
-    td = zeros(tds, 1);                 % vector of training data
+    td = zeros(tds, 4);                 % vector of training data
     tdl = zeros(tds, 1);                % training data label;
     tdi = 1;                            % current training data index
     

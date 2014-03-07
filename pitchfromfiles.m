@@ -13,8 +13,9 @@ function [arrayofpitch] = pitchfromfiles(arrayoffilepath)
         
         [data, FS] = readwav(char(file));
         data = data(:, 1);
-        pitch = fxpefac(data', FS);
-        pitch = mean(pitch);
+        
+        pitch = getpicthfromdata(data', FS);
+        
         arrayofpitch(i, 1) = pitch;
         i = i+1;
     end
