@@ -1,3 +1,9 @@
+%{
+Description:
+    - Record a voice using the build in microphone.
+Parameter: 
+    - s: number of second for recording. 
+%}
 function [recObj] = recordFromMic(s) 
     FR = 16000;
     nBits = 16;

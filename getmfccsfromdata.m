@@ -1,5 +1,13 @@
 %{
-    Extract MFCCs from a given data and Frame rate.
+Description:
+    - Extract MFCCs from a given data and Frame rate.
+
+Parameter: 
+    - data: speech sample 
+    - FS: sample rate.
+
+Return
+    - array of MFCCs extracted from file. 
 %}
 function [MFCCs] = getmfccsfromdata(data, FS)
     Tw = 25;           % analysis frame duration (ms)

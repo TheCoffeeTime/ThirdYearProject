@@ -1,9 +1,21 @@
 %{
-    A function which return a set of mfccs for each files.
+Description:
+    - A function which return a set of mfccs for each files.
     - Each file is broken into frames. Calculate MFCC for each frame
     - Make sure the label stay the same for each frame. 
     - Do this to all the given files stored in arrayoffilepath
     - Group the set of mfccs together and return as on variable
+
+Parameter:
+    - arrayoffilepath: Array containing file name and path
+    - arrayoflabel: Array of label corresponding to arrayoffilepath
+    - noofmfcccoeff total number of MFCC features wanting to be generated
+
+Return
+    - arrayofmfccs: MFCC features
+    - shortlabel: array of label which has the number of rows = arrayoffilepath
+    - longlabel: array of label which has number of rows =
+      (arrayoffilepath.noOfRow x 500, since each file can be broken into < 500 rows)
 %}
 function [arrayofmfccs, shortlabel, longlabel] = mfccsfromfiles(arrayoffilepath, arrayoflabel, noofmfcccoeff)
 
@@ -27,7 +39,10 @@ function [arrayofmfccs, shortlabel, longlabel] = mfccsfromfiles(arrayoffilepath,
         
         % Read wave from a file then extract mfcc
         [data, FS] = readwav(char(file));
-        data = data(:, 1);
+        
+        % Remove silence
+        data = detectVoiced(data, FS, 0);
+        
         MFCCs = getmfccsfromdata(data, FS);
         
         % Calculate where the ending index is.   

@@ -1,3 +1,4 @@
+%{
 addpath('/Users/Thanakorn/Downloads/voicebox');
 childFilePath = '/Users/Thanakorn/Documents/3rd project/speech-data/childes - children/';
 adultFilePath = '/Users/Thanakorn/Documents/3rd project/speech-data/podcasts - adults/';
@@ -41,7 +42,7 @@ for file = adultFile'
     adultFormants(i, 3) = F(3);
     i = i+1;
 end
-
+%}
 scatter3(adultFormants(:, 1), adultFormants(:, 2), adultFormants(:, 3), 10, 'r');
 hold on;
 scatter3(childFormants(:, 1), childFormants(:, 2), childFormants(:, 3), 10, 'g');

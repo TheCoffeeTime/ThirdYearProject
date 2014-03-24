@@ -22,9 +22,11 @@ function [arrayofpitch] = pitchfromfiles(arrayoffilepath)
         
         [data, FS] = audioread(char(file));
         
-        % Pre-processing
-        data = preprocessing(data, FS);
-        
+        % Remove silence
+        DV = detectVoiced(data, FS, 0);
+        DV = 
+        disp(size(DV, 1));
+        data = cell2mat(DV);
         pitch = getpicthfromdata(data', FS);
         
         arrayofpitch(i, 1) = pitch;

@@ -1,3 +1,9 @@
+%{
+Description:
+    This is a script used to validate the accuracy of the data and features
+    used. It does a crossfold validation. 
+%}
+
 % Number of sets of data
 n = 10;
 noofmfcccoeff = 13;

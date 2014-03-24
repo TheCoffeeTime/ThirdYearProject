@@ -1,4 +1,4 @@
-
+%{
 childFilePath = '/Users/Thanakorn/Documents/MATLAB/speech-data/childes-children/';
 adultFilePath = '/Users/Thanakorn/Documents/MATLAB/speech-data/podcasts-adults/';
 
@@ -28,7 +28,7 @@ for file = adultFile'
     adultPitch(i, 1) = pitch;
     i = i+1
 end
-
+%}
  scatter(adultPitch, (1:size(adultPitch, 1)), 10, 'g');
  hold on;
  scatter(childPitch, (1:size(childPitch, 1)), 10, 'r');

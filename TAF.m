@@ -1,13 +1,23 @@
-% Test Audio File
+%{
+Description:
+    - A call back function, Test Audio File
+    - From a given audio file loaded from the current path specified, 
+    - extract features and do a classification and return the result
+      on the UI
+%}
 function TAF()
+
+    % Get the current model and update the user message
     CMP = findobj('Tag', 'currentModel');
     selectedModelPath = get(CMP, 'String');
     sysmsg = findobj('Tag', 'sysmsg');
     set(sysmsg, 'String', '>>');
     global currentModelPath;
     global selectedModel;
-    hasError = false;
     
+    % A variable used to check if this script need to continue (from error)
+    hasError = false;
+
     % Load new model if the path has changed
     if strcmp(selectedModelPath, currentModelPath) ~= 1;
         try
@@ -25,6 +35,10 @@ function TAF()
         % Load voice form file
         CFPHandle = findobj('Tag', 'currentAFile');
         [audioData, FS] = audioread(get(CFPHandle, 'String'));
+        
+        % Pre-processing
+        audioData = preprocessing(audioData, FS);
+        
         % if it is PF model
         if strcmp(selectedModel.ModelType, 'PF') == 1
             classifyPF(audioData, FS, sysmsg, selectedModel);

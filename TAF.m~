@@ -1,26 +1,23 @@
 %{
-Description: 
-    - A call back function 
-    - This is called when the test my voice button is pressed
-    - Record a voice for a certain period, extract features, and do a
-    classifivation accoring to the model selected.
+Description:
+    - A call back function, Test Audio File
+    - From a given audio file loaded from the current path specified, 
+    - extract features and do a classification and return the result
+      on the UI
 %}
-function TMV()  
-    global currentModelPath;
-    global selectedModel;
-    global recordedVoice;
-    
-    % Get the classifiction model path and load it. 
+function TAF()
+
+    % Get the current model and update the user message
     CMP = findobj('Tag', 'currentModel');
     selectedModelPath = get(CMP, 'String');
-    
-    % Set the user message to be >>
     sysmsg = findobj('Tag', 'sysmsg');
     set(sysmsg, 'String', '>>');
+    global currentModelPath;
+    global selectedModel;
     
-    % boolean variable used to make the system stop when error occur. 
+    % A variable used to check if this script need to continue (from error)
     hasError = false;
-    
+
     % Load new model if the path has changed
     if strcmp(selectedModelPath, currentModelPath) ~= 1;
         try
@@ -33,17 +30,15 @@ function TMV()
             hasError = true;
         end
     end
-   
+    
     if hasError == false
-        % Record a voice. 
-        set(sysmsg, 'String', '>> Start recording...');
-        audioObj = recordFromMic(4);
-        recordedVoice = audioObj;
-        audioData = audioObj.getaudiodata;
-        FS = audioObj.SampleRate;
+        % Load voice form file
+        CFPHandle = findobj('Tag', 'currentAFile');
+        [audioData, FS] = audioread(get(CFPHandle, 'String'));
         
         % Pre-processing
-        audioData = preprocessing(audioData, FS);
+        audioData = detectVoiced(audioData, FS, 0);
+        audioData = combinedCArr(audioData);
         
         % if it is PF model
         if strcmp(selectedModel.ModelType, 'PF') == 1

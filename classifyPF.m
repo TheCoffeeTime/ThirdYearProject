@@ -1,3 +1,18 @@
+%{
+Description:
+    From a given audio signal, along with frame rate,
+    extract f0-f1 and then use a given model to classify it. 
+
+Parameters:
+    - audioData: The audio data wanted to be classified
+    - FS: frame rate
+    - sysmsg: User message
+    - model: SVM of pitch and formants model
+
+Return
+    - This function doesn't return anything as it already set the user
+    message
+%}
 function classifyPF(audioData, FS, sysmsg, model)
     feature_pf = zeros(1, 4);
     set(sysmsg, 'String', 'Extracting Pitch...');

@@ -1,12 +1,23 @@
 %{
+Description:
+    - Test a given dataset (features from data) using SVM
+    - Training data = loopno != kfoldindex
+    - Training data = loopno == kfoldindex
+Parameters:
+    - loopno and kfoldindex: use for comparision of what training and
+      testing data to use
+    - features_pf: data features (pitch and formants, f0-f3)
+    - label corresponding to the data
+Return:
+    - Accuracy in percentage
 %}
 function [accuracy] = testpffeatures(loopno, features_pf, label, kfoldindex)
     ds = size(label, 1);                % data size (number of files)
     tss = sum(kfoldindex == loopno);    % testig data size
     
+    % Training phase
     pfmodel = pftrain(loopno, features_pf, label, kfoldindex);
     pfmodel.ModelType = 'PF';
-    %savemodel(pfmodel, strcat('pf_', num2str(loopno)), '/Users/Thanakorn/Documents/ThirdYearProject/models/');
     
     % Testing phase
     correctcount = 0;

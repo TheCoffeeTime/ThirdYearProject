@@ -1,4 +1,5 @@
 %{
+Description:
     - For every path given as a parameter, get all the file names, 
       connect each file name with their path, and group them together. 
     - Return the group as the data set path, and label. 
@@ -17,6 +18,13 @@
                                  adultfilepath2,{'adult'});
     
     where 1 and 2 represent the class i.e. child and adult. 
+
+Parameter:
+    - varargin: a couple paramter which are path and label.
+
+Return:
+    - array of data path and array of label
+    
 %}
 function [datasetpath, label] = combineddata(varargin)
     arglength = size(varargin, 2);

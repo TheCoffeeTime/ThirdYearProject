@@ -1,4 +1,18 @@
 %{
+Description:
+    - From a given array of file path (datasetpath) corresponding with the
+     label (label), extract mfcc features and create a model using SVM
+    - This function is used only with the k-fold cross validation
+
+Parameters:
+    - loopno and kfoldindex: use for comparision of what training and
+      testing data to use
+    - features_pf: data features (MFCC)
+    - label corresponding to the data
+
+Return
+    - MFCCs model 
+    
 %}
 function [mfccmodel] = mfccTrainCrossV(loopno, features_mfccs, label, kfoldindex)
     
