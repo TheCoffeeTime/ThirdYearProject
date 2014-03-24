@@ -16,8 +16,8 @@ function outdata = preprocessing(indata, FS)
     s = size(tempData, 2);
     
     % If it is possible to remove silent then do it. 
-    if s > 1
-        outdata = tempData{1}
+    if s > 0
+        outdata = tempData{1};
         for i = 2:s
             outdata = vertcat(outdata, tempData{i});
         end

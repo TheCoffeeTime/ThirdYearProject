@@ -41,7 +41,7 @@ function [arrayofmfccs, shortlabel, longlabel] = mfccsfromfiles(arrayoffilepath,
         [data, FS] = readwav(char(file));
         
         % Remove silence
-        data = detectVoiced(data, FS, 0);
+        data = preprocessing(data, FS);
         
         MFCCs = getmfccsfromdata(data, FS);
         
